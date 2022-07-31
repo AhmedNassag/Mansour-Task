@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\SalesrepController;
 use App\Http\Controllers\Api\SalesterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,13 +25,13 @@ use App\Http\Controllers\AuthController;
 */
 
 //Auth routes
-Route::group(['middleware' => 'api','prefix' => 'auth'], function($router)
+Route::group(['middleware' => 'api','prefix' => 'auth'], function()
 {
-    Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    // Route::post('/refresh', [AuthController::class, 'refresh']);
+    // Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
 
 
@@ -39,9 +39,8 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function($router)
 //User must be have token to be able to visit those routes
 Route::group(['middleware' => 'JwtMiddleware'],function()
 {
-
+    
 });
-
     //categories routes
     Route::get('/categories',[CategoryController::class,'index']);
     Route::get('/category/{id}',[CategoryController::class,'show']);
